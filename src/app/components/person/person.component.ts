@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, DoCheck, AfterContentChecked, OnChanges, SimpleChanges  } from '@angular/core';
 import { Fruit } from './../fruit';
 
 @Component({
@@ -6,7 +6,7 @@ import { Fruit } from './../fruit';
   templateUrl: './person.component.html',
   styleUrls: ['./person.component.scss']
 })
-export class PersonComponent implements OnInit {
+export class PersonComponent implements OnInit, DoCheck {
 
   private _fruit: Fruit
   @Input() set fruit(val: Fruit){
@@ -17,9 +17,14 @@ export class PersonComponent implements OnInit {
     return this._fruit;
   }
 
-  constructor() { }
+  constructor(private _cdRef: ChangeDetectorRef) { }
 
-  ngOnInit() {
+  ngOnInit(){
+    this._cdRef.detectChanges();
+  }
+
+  ngDoCheck(){
+    console.log("changed")
   }
 
 }
